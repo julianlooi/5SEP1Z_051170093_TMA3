@@ -1,0 +1,947 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="js/vendor/jquery-1.12.3.min.js"></script>
+  <script src="js/vendor/bootstrap.bundle.min.js"></script>
+
+  <script src="js/vendor/jquery-ui.js"></script>
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <script src="js/vendor/jquery.ui.touch-punch.js"></script>
+
+  <script src="js/vendor/jquery.mask.js"></script>
+
+  <script src="js/main.js"></script>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <!-- from  here-->
+  <div class="container-fluid">
+    <div class="form-vertical">
+
+      <!-- Form Name -->
+      <legend>Financial Calculator</legend>
+      <div class="form-group">
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>Age estimation:</h5>
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am </span>
+          <input type="text" id="minAge" readonly class="rangeInput">
+          <span>
+            years old and planning to retire at age
+          </span>
+          <input type="text" id="maxAge" readonly class="rangeInput">
+          <span>
+            .Hence, I am retiring in
+          </span>
+          <input type="text" id="diffAge" readonly class="rangeInput">
+          <span>
+            years.
+          </span>
+
+          <div id="age-slider-range"></div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am expecting</span>
+          <input type="text" id="yrInRetirement" readonly class="rangeInput">
+          <span>
+            years in retirement life
+          </span>
+
+          <div id="yrInRetirement-slider-range"></div>
+        </div>
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>Income estimation:</h5>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-inline">
+          <label class="control-label" for="textinput">My Current Annual Income at the moment is: (RM) </label>
+          <div class="form-group">
+            <input id="annualIncome" name="textinput" type="text" maxlength="10" class="form-control input-md money"
+              required="" value="40000" min="0.00" step="0.05">
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am expecting</span>
+          <input type="text" id="incrementRate" readonly class="rangeInput">
+          <span>
+            % of increment per year.
+          </span>
+          <div id="incrementRate-slider-range"></div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am expecting</span>
+          <input type="text" id="lifeStylePer" readonly class="rangeInput">
+          <span>
+            % of lifestyle to be maintained
+          </span>
+
+          <div id="lifeStylePer-slider-range" data-toggle="popover" data-trigger="hover" data-placement="top"
+            data-content="percentage of income required after retirement"></div>
+        </div>
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>Asset/Investment estimation:</h5>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-inline">
+          <label class="control-label" for="textinput">My Current Investments at the moment is : (RM) </label>
+          <div class="form-group">
+            <input id="currentInvestment" name="textinput" type="text" class="form-control input-md money" required=""
+              maxlength="10" min="0.00" step="0.05" value="0">
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>Annual Rate of investment </span>
+          <input type="text" id="rateOfInvestment" readonly class="rangeInput">
+          <span>
+            % per year.
+          </span>
+          <div id="rateOfInvestment-slider-range" data-toggle="popover" data-trigger="hover" data-placement="top"
+            data-content="expected rate of return from your investments"></div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>Expected annual inflation </span>
+          <input type="text" id="annualInflation" readonly class="rangeInput">
+          <span>
+            % per year.
+          </span>
+          <div id="annualInflation-slider-range"></div>
+        </div>
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>EPF estimation:</h5>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-inline">
+          <label class="control-label" for="textinput">My Current EPF balance is : (RM) </label>
+          <div class="form-group">
+            <input id="currentEPF" name="textinput" type="text" placeholder="placeholder"
+              class="form-control input-md money" required="" maxlength="10" min="0.00" step="0.05" value="25000">
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>Expected EPF Rate of return </span>
+          <input type="text" id="epfRate" readonly class="rangeInput">
+          <span>
+            % per year.
+          </span>
+          <div id="epfRate-slider-range"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button class="primary" onclick="onSubmit()">
+            Calculate
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="resultPanel" style="display: none;">
+
+
+      <div class="container-fluid pt-4 pb-4">
+        <div class="row">
+          <div class="col">
+            <h4>How much do you need for your retirement.</h4>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Your potential Future Annual income upon retirement is:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="annualIncomeFv" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="estimated annual income upon the first year of retirement">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              First Year retirement income :
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="firstYrRetirementIncome" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Capital Requirement upon retirement:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="capitalReq" name="textinput" placeholder="placeholder" class="form-control input-md"
+              value="0" readonly>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Future Value of Asset / Investment
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="investFvResult" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Future Value of EPF balance:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="epfFVResult" name="textinput" placeholder="placeholder" class="form-control input-md"
+              value="0" readonly data-toggle="popover" data-trigger="hover" data-placement="top"
+              data-content="total value of EPF savings upon retirement based on existing EPF amount">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Future Value of EPF Annual Contribution:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="epfAnnualFVcontri" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="total value of EPF savings based on future income growth ">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Projected EPF balance at Retirement:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="epfTotalAtRetirement" name="textinput" placeholder="placeholder"
+              class="form-control input-md position-relative" value="0" readonly data-toggle="popover"
+              data-trigger="hover" data-placement="top"
+              data-content="Grand total of estimated EPF balance upon retirement">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Surplus/Shortfall Of Capital:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="surplusOrShortFallResult" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="More than enough/less than enough to retire comfortably!">
+          </div>
+        </div>
+
+        <hr>
+
+        <h4 id="conclusionPositive" style="display: none;">
+          Congratulation, you will have enough money for your retirement.
+        </h4>
+
+        <div id="conclusionNegative" class="row m-1" style="display: none;">
+          <div class="col-5">
+            <h4>
+              How much you will need to save every year for your retirement (RM)
+            </h4>
+          </div>
+          <div class="col-7">
+            <input type="text" id="conclusionValue" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="Amount to save per year in order to meet retirement requirements">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--to here-->
+
+  <div id="weightedReturnTable" class="container-fluid justify-content-center weightedReturnTable">
+    <div>
+      <!-- Form Name -->
+      <legend>Investment Weight Calculator</legend>
+      <hr>
+      <table class="table table-responsive table-bordered table-striped w-100">
+  
+        <thead>
+          <tr>
+            <th data-label="Investment assets" scope="col">Investment assets</th>
+            <th data-label="Expected ROI" scope="col">Expected ROI</th>
+            <th data-label="Total" scope="col">Total</th>
+            <th data-label="Weightage" scope="col">Weightage</th>
+            <th data-label="Weighted Return" scope="col">Weighted Return</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th data-label="Investment assets" scope="row"></th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Liquid assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Savings Accounts/ Islamic Savings Account</th>
+            <td data-label="Expected ROI">
+              <input id="roi1" name="textinput" class="roiInput" value="1" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount1" name="textinput" class="money" value="10000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight1">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn1">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Fixed Deposit/ Islamic Fixed Deposit</th>
+            <td data-label="Expected ROI">
+              <input id="roi2" name="textinput" class="roiInput" value="3" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount2" name="textinput" class="money" value="20000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight2">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn2">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Investment Linked Insurance</th>
+            <td data-label="Expected ROI">
+              <input id="roi3" name="textinput" class="roiInput" value="5" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount3" name="textinput" class="money" value="40000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight3">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn3">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Unit Trust/ Islamic Unit Trust</th>
+            <td data-label="Expected ROI">
+              <input id="roi4" name="textinput" class="roiInput" value="10" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount4" name="textinput" class="money" value="100000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight4">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn4">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Total Liquid Assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total" id="liquidTotal" class="font-weight-bold"> 170,000 </td>
+            <td data-label="Weightage" id='liquidWeightSum' class="font-weight-bold">0.00</td>
+            <td data-label="Weighted Return" id="liquidwWeightReturn" class="font-weight-bold">0.00</td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row"></th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Non-liquid Assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">EPF</th>
+            <td data-label="Expected ROI">
+              <input id="roi5" name="textinput" class="roiInput" value="4" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount5" name="textinput" class="money" value="200000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight5">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn5">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Real Estate </th>
+            <td data-label="Expected ROI">
+              <input id="roi6" name="textinput" class="roiInput" value="8" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount6" name="textinput" class="money" value="400000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight6">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn6">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Total Non-liquid Assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total" id="nonLiquidTotal" class="font-weight-bold"> 170,000 </td>
+            <td data-label="Weightage" id='nonLiquidWeightSum' class="font-weight-bold">0.00</td>
+            <td data-label="Weighted Return" id="nonLiquidWeightReturn" class="font-weight-bold">0.00</td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row"></th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Your Total Assets Are Earning</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total" id="grandTotal" class="font-weight-bolder font-italic"> 10000
+            </td>
+            <td data-label="Weightage" id="grandWeight" class="font-weight-bolder font-italic">0.00</td>
+            <td data-label="Weighted Return" id="grandWeightReturn" class="font-weight-bolder font-italic">0.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <!-- from  here-->
+  <div class="container-fluid">
+    <div class="form-vertical">
+
+      <!-- Form Name -->
+      <legend>Financial Calculator</legend>
+      <div class="form-group">
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>Age estimation:</h5>
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am </span>
+          <input type="text" id="minAge" readonly class="rangeInput">
+          <span>
+            years old and planning to retire at age
+          </span>
+          <input type="text" id="maxAge" readonly class="rangeInput">
+          <span>
+            .Hence, I am retiring in
+          </span>
+          <input type="text" id="diffAge" readonly class="rangeInput">
+          <span>
+            years.
+          </span>
+
+          <div id="age-slider-range"></div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am expecting</span>
+          <input type="text" id="yrInRetirement" readonly class="rangeInput">
+          <span>
+            years in retirement life
+          </span>
+
+          <div id="yrInRetirement-slider-range"></div>
+        </div>
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>Income estimation:</h5>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-inline">
+          <label class="control-label" for="textinput">My Current Annual Income at the moment is: (RM) </label>
+          <div class="form-group">
+            <input id="annualIncome" name="textinput" type="text" maxlength="10" class="form-control input-md money"
+              required="" value="40000" min="0.00" step="0.05">
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am expecting</span>
+          <input type="text" id="incrementRate" readonly class="rangeInput">
+          <span>
+            % of increment per year.
+          </span>
+          <div id="incrementRate-slider-range"></div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>I am expecting</span>
+          <input type="text" id="lifeStylePer" readonly class="rangeInput">
+          <span>
+            % of lifestyle to be maintained
+          </span>
+
+          <div id="lifeStylePer-slider-range" data-toggle="popover" data-trigger="hover" data-placement="top"
+            data-content="percentage of income required after retirement"></div>
+        </div>
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>Asset/Investment estimation:</h5>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-inline">
+          <label class="control-label" for="textinput">My Current Investments at the moment is : (RM) </label>
+          <div class="form-group">
+            <input id="currentInvestment" name="textinput" type="text" class="form-control input-md money" required=""
+              maxlength="10" min="0.00" step="0.05" value="0">
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>Annual Rate of investment </span>
+          <input type="text" id="rateOfInvestment" readonly class="rangeInput">
+          <span>
+            % per year.
+          </span>
+          <div id="rateOfInvestment-slider-range" data-toggle="popover" data-trigger="hover" data-placement="top"
+            data-content="expected rate of return from your investments"></div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>Expected annual inflation </span>
+          <input type="text" id="annualInflation" readonly class="rangeInput">
+          <span>
+            % per year.
+          </span>
+          <div id="annualInflation-slider-range"></div>
+        </div>
+
+        <hr>
+
+        <div class="row subtitle pt-2">
+          <div class="col">
+            <h5>EPF estimation:</h5>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-inline">
+          <label class="control-label" for="textinput">My Current EPF balance is : (RM) </label>
+          <div class="form-group">
+            <input id="currentEPF" name="textinput" type="text" placeholder="placeholder"
+              class="form-control input-md money" required="" maxlength="10" min="0.00" step="0.05" value="25000">
+          </div>
+        </div>
+
+        <div class="rangeSlider">
+          <span>Expected EPF Rate of return </span>
+          <input type="text" id="epfRate" readonly class="rangeInput">
+          <span>
+            % per year.
+          </span>
+          <div id="epfRate-slider-range"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button class="primary" onclick="onSubmit()">
+            Calculate
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="resultPanel" style="display: none;">
+
+
+      <div class="container-fluid pt-4 pb-4">
+        <div class="row">
+          <div class="col">
+            <h4>how much do you need for your retirement.</h4>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Your potential Future Annual income upon retirement is:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="annualIncomeFv" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="estimated annual income upon the first year of retirement">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              First Year retirement income :
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="firstYrRetirementIncome" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Capital Requirement upon retirement:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="capitalReq" name="textinput" placeholder="placeholder" class="form-control input-md"
+              value="0" readonly>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Future Value of Asset / Investment
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="investFvResult" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly>
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Future Value of EPF balance:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="epfFVResult" name="textinput" placeholder="placeholder" class="form-control input-md"
+              value="0" readonly data-toggle="popover" data-trigger="hover" data-placement="top"
+              data-content="total value of EPF savings upon retirement based on existing EPF amount">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Future Value of EPF Annual Contribution:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="epfAnnualFVcontri" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="total value of EPF savings based on future income growth ">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Projected EPF balance at Retirement:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="epfTotalAtRetirement" name="textinput" placeholder="placeholder"
+              class="form-control input-md position-relative" value="0" readonly data-toggle="popover"
+              data-trigger="hover" data-placement="top"
+              data-content="Grand total of estimated EPF balance upon retirement">
+          </div>
+        </div>
+
+        <div class="row m-1">
+          <div class="col-5">
+            <span>
+              Surplus/Shortfall Of Capital:
+            </span>
+          </div>
+          <div class="col-7">
+            <input type="text" id="surplusOrShortFallResult" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="More than enough/less than enough to retire comfortably!">
+          </div>
+        </div>
+
+        <hr>
+
+        <h4 id="conclusionPositive" style="display: none;">
+          Congratulations! You will have enough money for your retirement.
+        </h4>
+
+        <div id="conclusionNegative" class="row m-1" style="display: none;">
+          <div class="col-5">
+            <h4>
+              How much you will need to save every year for your retirement (RM)
+            </h4>
+          </div>
+          <div class="col-7">
+            <input type="text" id="conclusionValue" name="textinput" placeholder="placeholder"
+              class="form-control input-md" value="0" readonly data-toggle="popover" data-trigger="hover"
+              data-placement="top" data-content="Amount to save per year in order to meet retirement requirements">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--to here-->
+<p>
+	 
+</p>
+
+  <div id="weightedReturnTable" class="container-fluid justify-content-center weightedReturnTable">
+    <div>
+      <!-- Form Name -->
+      <legend>Investment Weightage Calculator</legend>
+      <hr>
+      <table class="table table-responsive table-bordered table-striped w-100">
+  
+        <thead>
+          <tr>
+            <th data-label="Investment assets" scope="col">Investment assets</th>
+            <th data-label="Expected ROI" scope="col">Expected ROI</th>
+            <th data-label="Total" scope="col">Total</th>
+            <th data-label="Weightage" scope="col">Weightage</th>
+            <th data-label="Weighted Return" scope="col">Weighted Return</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th data-label="Investment assets" scope="row"></th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Liquid assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Savings Accounts/ Islamic Savings Account</th>
+            <td data-label="Expected ROI">
+              <input id="roi1" name="textinput" class="roiInput" value="1" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount1" name="textinput" class="money" value="10000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight1">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn1">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Fixed Deposit/ Islamic Fixed Deposit</th>
+            <td data-label="Expected ROI">
+              <input id="roi2" name="textinput" class="roiInput" value="3" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount2" name="textinput" class="money" value="20000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight2">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn2">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Investment Linked Insurance</th>
+            <td data-label="Expected ROI">
+              <input id="roi3" name="textinput" class="roiInput" value="5" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount3" name="textinput" class="money" value="40000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight3">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn3">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Unit Trust/ Islamic Unit Trust</th>
+            <td data-label="Expected ROI">
+              <input id="roi4" name="textinput" class="roiInput" value="10" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount4" name="textinput" class="money" value="100000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight4">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn4">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Total Liquid Assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total" id="liquidTotal" class="font-weight-bold"> 170,000 </td>
+            <td data-label="Weightage" id='liquidWeightSum' class="font-weight-bold">0.00</td>
+            <td data-label="Weighted Return" id="liquidwWeightReturn" class="font-weight-bold">0.00</td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row"></th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Non-liquid Assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">EPF</th>
+            <td data-label="Expected ROI">
+              <input id="roi5" name="textinput" class="roiInput" value="4" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount5" name="textinput" class="money" value="200000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight5">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn5">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Real Estate </th>
+            <td data-label="Expected ROI">
+              <input id="roi6" name="textinput" class="roiInput" value="8" type="text" maxlength="3" /> %
+            </td>
+            <td data-label="Total">
+              (RM)<input id="amount6" name="textinput" class="money" value="400000" type="text" maxlength="8" />
+            </td>
+            <td data-label="Weightage">
+              <span id="weight6">0.00</span>
+            </td>
+            <td data-label="Weighted Return">
+              <span id="weightReturn6">0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">Total Non-liquid Assets</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total" id="nonLiquidTotal" class="font-weight-bold"> 170,000 </td>
+            <td data-label="Weightage" id='nonLiquidWeightSum' class="font-weight-bold">0.00</td>
+            <td data-label="Weighted Return" id="nonLiquidWeightReturn" class="font-weight-bold">0.00</td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row"></th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total"></td>
+            <td data-label="Weightage"></td>
+            <td data-label="Weighted Return"></td>
+          </tr>
+          <tr>
+            <th data-label="Investment assets" scope="row">The Return On Your Total Assets Is</th>
+            <td data-label="Expected ROI"></td>
+            <td data-label="Total" id="grandTotal" class="font-weight-bolder font-italic"> 10000
+            </td>
+            <td data-label="Weightage" id="grandWeight" class="font-weight-bolder font-italic">0.00</td>
+            <td data-label="Weighted Return" id="grandWeightReturn" class="font-weight-bolder font-italic">0.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    
+  </div>
+
+</body>
+
+</html>

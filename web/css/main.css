@@ -1,0 +1,52 @@
+/*range slider styling*/
+.rangeSlider{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.rangeInput{
+    border:0 !important;
+    color:#f6931f !important;
+    font-weight:bold !important;
+    width: 1.5em !important;
+    padding: 0 !important;
+}
+
+.ui-slider {
+    margin-top: 10px;
+    height: 7px;
+    position: relative;
+    border: none;
+    background: #fff;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border:1px solid #000;
+    background: #f6931f;
+    position: absolute;
+    top: -6px;
+}
+.ui-slider-horizontal .ui-slider-range {
+    background: #f6921fb0
+}
+
+#labelHolder {
+    height: 7px;
+    position: relative;
+    border: none;
+}
+span .ui-slider-handle .ui-corner-all .ui-state-default {
+  position: absolute;
+  text-align: center;
+}
+
+.control-label{
+    float: left;
+}
+
+.roiInput {
+    width: 50px;
+}
+
+#weightedReturnTable .money {
+    width:100px;
+}
